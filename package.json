@@ -1,0 +1,14 @@
+{
+  "name": "keg-configurable-invitation",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "serve": "node tests/server.mjs",
+    "test": "node --test",
+    "validate:config": "node tests/validate-config.mjs",
+    "check:assets": "node --test tests/assets.test.mjs",
+    "check:sensitive": "node --test tests/security.test.mjs"
+  },
+  "engines": { "node": ">=18" }
+}
