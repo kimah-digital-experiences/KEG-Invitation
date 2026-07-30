@@ -32,6 +32,11 @@ try {
     const consoleErrors = [];
     const failedRequests = [];
     const integrationRequests = [];
+    await page.route("https://fonts.googleapis.com/**", (route) => route.fulfill({
+      status: 200,
+      contentType: "text/css",
+      body: ""
+    }));
     page.on("console", (message) => { if (message.type() === "error") consoleErrors.push(message.text()); });
     page.on("requestfailed", (request) => failedRequests.push(`${request.method()} ${request.url()}: ${request.failure()?.errorText}`));
     page.on("request", (request) => {
@@ -41,6 +46,8 @@ try {
     await page.goto(url, { waitUntil: "networkidle" });
     await page.screenshot({ path: `${evidenceDir}/${width}-portada.png`, fullPage: true });
     await page.locator("#envWrap").click();
+    await page.locator("body.gate-done").waitFor();
+    await page.locator("#gate").waitFor({ state: "hidden" });
     await page.locator("#appContent").waitFor({ state: "visible" });
 
     const enabledSections = await page.evaluate(() => Object.entries(window.INVITATION_CONFIG.sections).filter(([, enabled]) => enabled).map(([name]) => name));
