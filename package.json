@@ -1,0 +1,8 @@
+{
+  "name": "keg-invitation-template",
+  "private": true,
+  "scripts": {
+    "validate": "node scripts/validate-config.js && node scripts/check-sensitive.js",
+    "test": "npm run validate"
+  }
+}
