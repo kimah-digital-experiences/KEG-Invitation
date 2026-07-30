@@ -1,6 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
-const files = ["index.html", "js/config.js", "js/app.js", "README.md"];
+const files = ["index.html", "config/invitation.json", "js/config.js", "js/app.js", "README.md"];
 const forbidden = [
   [/script\.google\.com|wa\.me|api\.whatsapp\.com/i, "endpoint o WhatsApp real"],
   [/\b(?:cuenta|account)\s*(?:n[úu]mero|number|#)?\s*[:=-]?\s*\d{6,}/i, "posible cuenta bancaria"],

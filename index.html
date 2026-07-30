@@ -12,14 +12,35 @@
   <script src="js/app.js" defer></script>
 </head>
 <body>
-  <div class="gate" id="gate" aria-label="Portada de invitación">
+  <div class="gate" id="gate" role="dialog" aria-modal="true" aria-labelledby="gateNames" aria-describedby="gateHint">
     <div class="gate-card">
-      <div class="gate-names" data-names></div><div class="guestLine" id="guestLine"></div><div class="paxLine" id="paxLine"></div>
-      <button class="env-wrap" id="envWrap" type="button" aria-label="Abrir invitación"><span class="seal">Abrir invitación</span></button>
+      <p class="gate-eyebrow" id="gateEyebrow"></p>
+      <div class="gate-names" id="gateNames" data-names></div>
+      <div class="guestLine" id="guestLine"></div>
+      <div class="paxLine" id="paxLine"></div>
+      <button class="env-wrap" id="envWrap" type="button" aria-describedby="gateHint" aria-expanded="false">
+        <span class="envelope" aria-hidden="true">
+          <span class="envelope-back"></span>
+          <span class="envelope-letter">
+            <span class="envelope-letter-kicker" id="envelopeLetterLabel"></span>
+            <span class="envelope-letter-monogram" data-cover-monogram></span>
+            <span class="envelope-letter-rule"></span>
+          </span>
+          <span class="envelope-pocket">
+            <span class="envelope-fold envelope-fold-left"></span>
+            <span class="envelope-fold envelope-fold-right"></span>
+            <span class="envelope-fold envelope-fold-bottom"></span>
+          </span>
+          <span class="envelope-flap"></span>
+          <span class="envelope-seal"><span data-cover-monogram></span></span>
+        </span>
+        <span class="envelope-action" id="envelopeOpenLabel"></span>
+      </button>
+      <p class="gate-hint" id="gateHint"></p>
     </div>
   </div>
   <main id="appContent" hidden>
-    <section class="hero" id="inicio"><div class="heroContent container"><button id="musicBtn" class="music-btn" type="button" hidden>▶ Música</button><div class="heroNames" data-names></div><p class="heroInvite" id="invitationText"></p><div class="countNums" id="countNums"></div></div></section>
+    <section class="hero" id="inicio" tabindex="-1"><div class="heroContent container"><button id="musicBtn" class="music-btn" type="button" hidden>▶ Música</button><div class="heroNames" data-names></div><p class="heroInvite" id="invitationText"></p><div class="countNums" id="countNums"></div></div></section>
     <div id="sections"></div>
     <footer class="footer" id="footer"></footer>
   </main>

@@ -2,8 +2,10 @@
   "name": "keg-invitation-template",
   "private": true,
   "scripts": {
-    "validate": "node scripts/validate-config.js && node scripts/check-sensitive.js && node scripts/validate-css.js",
-    "test": "npm run validate",
+    "generate": "node scripts/generate-config.mjs",
+    "create:invitation": "node scripts/create-invitation.mjs",
+    "validate": "node scripts/generate-config.mjs --check && node scripts/validate-config.js && node scripts/check-sensitive.js && node scripts/validate-css.js",
+    "test": "npm run validate && node scripts/test-generator.mjs",
     "test:visual": "node scripts/visual-test.mjs"
   }
 }

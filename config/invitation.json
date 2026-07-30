@@ -1,25 +1,21 @@
-/** Archivo generado desde config/invitation.json. No lo edites manualmente. */
-(() => {
-  const deepFreeze = (value) => {
-    if (value && typeof value === "object" && !Object.isFrozen(value)) {
-      Object.values(value).forEach(deepFreeze);
-      Object.freeze(value);
-    }
-    return value;
-  };
-
-  window.INVITATION_CONFIG = deepFreeze({
+{
   "site": {
     "basePath": "/KEG-Invitation/",
     "language": "es",
-    "title": "Elena & Mateo | Invitación"
+    "title": ""
   },
   "cover": {
     "eyebrow": "Invitación de boda",
     "letterLabel": "Una celebración para recordar",
     "openLabel": "Abrir invitación",
     "hint": "Toca el sobre para descubrir los detalles",
-    "monogram": "EM"
+    "monogram": ""
+  },
+  "couple": {
+    "person1": "Elena Rivera",
+    "person2": "Mateo Flores",
+    "short1": "Elena",
+    "short2": "Mateo"
   },
   "guest": {
     "defaultLabel": "INVITADO ESPECIAL",
@@ -27,14 +23,11 @@
     "allowUrlPersonalization": true
   },
   "event": {
+    "dateTime": "2027-05-22T17:00:00-06:00",
     "timeZone": "America/Tegucigalpa",
     "dateLabel": {
-      "day": "22",
-      "month": "Mayo",
-      "year": "2027",
       "time": "5:00 PM"
     },
-    "dateTime": "2027-05-22T17:00:00-06:00",
     "city": "Ciudad Ejemplo",
     "country": "País de Demostración",
     "confirmationDeadline": "30 de abril de 2027"
@@ -127,12 +120,5 @@
     "dressCode": true,
     "gifts": true,
     "rsvp": true
-  },
-  "couple": {
-    "person1": "Elena Rivera",
-    "person2": "Mateo Flores",
-    "short1": "Elena",
-    "short2": "Mateo"
   }
-});
-})();
+}

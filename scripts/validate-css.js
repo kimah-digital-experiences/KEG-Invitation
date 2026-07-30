@@ -12,11 +12,13 @@ for (const char of structural) {
 if (depth !== 0) errors.push(`Llaves CSS desbalanceadas: ${depth}`);
 if (/^\s*\((?:min|max)-width\s*:/m.test(structural)) errors.push("Regla responsive sin @media");
 
-const requiredSelectors = [".gate", ".gate-card", ".env-wrap", ".heroContent", ".heroNames", ".heroInvite", ".countNums", ".placesGrid", ".placeCard", ".gallery", ".gItem", ".timeline", ".timelineItem", "#rsvpForm", ".rsvpChoice", ".choiceBtn", ".statusMsg", ".footer"];
+const requiredSelectors = [".gate", ".gate-card", ".env-wrap", ".envelope", ".envelope-back", ".envelope-letter", ".envelope-pocket", ".envelope-flap", ".envelope-seal", ".heroContent", ".heroNames", ".heroInvite", ".countNums", ".placesGrid", ".placeCard", ".gallery", ".gItem", ".timeline", ".timelineItem", "#rsvpForm", ".rsvpChoice", ".choiceBtn", ".statusMsg", ".footer"];
 requiredSelectors.forEach((selector) => { if (!css.includes(selector)) errors.push(`Falta estilo para ${selector}`); });
 [320, 390, 768, 1440].forEach((width) => {
   if (width <= 520 && !/@media\s*\(max-width:\s*520px\)/.test(css)) errors.push(`No hay breakpoint móvil para ${width}px`);
 });
+if (!/\.envelope\s*\{[\s\S]*?aspect-ratio:\s*16\s*\/\s*10\s*;/m.test(css)) errors.push("El sobre debe declarar una proporción rectangular 16:10");
+if (!/@media\s*\(prefers-reduced-motion:\s*reduce\)/.test(css)) errors.push("Falta la política prefers-reduced-motion");
 const overflowGuards = [/overflow-x:\s*hidden/, /max-width:\s*100%/, /minmax\(0,\s*1fr\)/];
 overflowGuards.forEach((guard) => { if (!guard.test(css)) errors.push(`Falta protección de overflow: ${guard}`); });
 
