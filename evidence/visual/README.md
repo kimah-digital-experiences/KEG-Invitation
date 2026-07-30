@@ -1,37 +1,30 @@
-# Estado de validación visual responsive
+# Evidencia visual responsive
 
-Fecha del último intento: 2026-07-30.
+El workflow **Validate invitation** ejecuta `scripts/visual-test.mjs` con Chromium real en cada push y pull request hacia `main`.
 
-## Resultado
+## Matriz y capturas
 
-La validación visual real continúa **bloqueada y no se considera completada**. Este entorno no incluye Chromium, Chrome, Firefox, Playwright, Puppeteer ni otro motor gráfico. Además:
+Para cada ancho se generan dos PNG como artefacto `visual-evidence` del check de GitHub Actions:
 
-- La instalación de Chromium mediante `apt-get` fue bloqueada por el proxy con HTTP 403.
-- La descarga de Playwright mediante `npx` fue bloqueada por el registro con HTTP 403.
-- El acceso al PR #3 y a GitHub mediante `curl`/Git también fue bloqueado por el túnel con HTTP 403.
+| Resolución | Portada | Recorrido completo |
+| ---: | --- | --- |
+| 320 × 900 | `320-portada.png` | `320-recorrido-completo.png` |
+| 390 × 900 | `390-portada.png` | `390-recorrido-completo.png` |
+| 768 × 900 | `768-portada.png` | `768-recorrido-completo.png` |
+| 1440 × 900 | `1440-portada.png` | `1440-recorrido-completo.png` |
 
-Por este motivo, este directorio no contiene capturas: no se generó ni se adjuntó evidencia visual ficticia. El PR debe permanecer en Draft hasta ejecutar la matriz en un navegador real.
+Las imágenes se escriben en `evidence/visual/` durante el job y se publican incluso si una comprobación posterior falla. No se versionan capturas generadas localmente para evitar evidencia obsoleta.
 
-## Verificaciones que sí se ejecutaron
+## Comprobaciones automatizadas
 
-La aplicación se sirvió desde el directorio padre con:
+En cada resolución, la prueba:
 
-```bash
-python3 -m http.server 8765 --directory /workspace
-```
+1. Sirve la aplicación en `/KEG-Invitation/` y captura la portada.
+2. Abre la invitación, recorre todas las secciones configuradas y captura la página completa.
+3. Comprueba que el número de secciones renderizadas corresponda con las secciones habilitadas.
+4. Envía el formulario de demostración y verifica el mensaje local de no envío.
+5. Falla ante overflow horizontal, errores de consola o solicitudes de red fallidas.
+6. Falla si detecta solicitudes a WhatsApp, Google Script, webhooks o endpoints similares.
+7. Verifica `demoMode`, endpoint y WhatsApp vacíos, y ausencia de cuentas bancarias.
 
-Se comprobó correctamente la ruta `/KEG-Invitation/` y la carga HTTP de `css/styles.css` y `js/app.js`. También pasó `npm test`, incluida la revisión estática para 320, 390, 768 y 1440 px y las guardas contra overflow. Estas comprobaciones **no sustituyen** una validación renderizada.
-
-## Matriz pendiente en navegador
-
-En 320, 390, 768 y 1440 px se debe capturar y revisar:
-
-1. Portada antes de abrir.
-2. Animación de apertura y hero posterior.
-3. Recorrido vertical completo y todas las secciones habilitadas.
-4. Una sección deshabilitada desde `js/config.js`.
-5. Ausencia de scroll horizontal y superposiciones.
-6. Consola sin errores y red sin solicitudes de RSVP, WhatsApp ni endpoints reales.
-7. RSVP demo sin envío y regalos sin cuentas bancarias.
-
-Las capturas reales deberán guardarse en este mismo directorio antes de aprobar el PR.
+Los resultados y PNG válidos deben consultarse en el artefacto del último run de GitHub Actions asociado al PR; el PR debe permanecer en Draft si el job no está verde.

@@ -3,8 +3,7 @@ name: Validate invitation
 on:
   push:
   pull_request:
-    branches:
-      - main
+    branches: [main]
 
 permissions:
   contents: read
@@ -12,14 +11,26 @@ permissions:
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 5
+    timeout-minutes: 10
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v4
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
-      - name: Run validations
+      - name: Install dependencies
+        run: npm install --no-save playwright@1.55.0
+      - name: Run static validations
         run: npm test
+      - name: Install Chromium
+        run: npx playwright install --with-deps chromium
+      - name: Run browser validation
+        run: npm run test:visual
+      - name: Publish visual evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: visual-evidence
+          path: evidence/visual/*.png
+          if-no-files-found: warn
+          retention-days: 30
