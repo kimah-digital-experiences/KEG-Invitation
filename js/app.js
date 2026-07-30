@@ -35,7 +35,17 @@
   const renderCountdown = () => { const seconds = Math.max(0, Math.floor((target - Date.now()) / 1000)); const values = [Math.floor(seconds / 86400), Math.floor(seconds % 86400 / 3600), Math.floor(seconds % 3600 / 60), seconds % 60]; document.querySelector("#countNums").innerHTML = values.map((v, i) => `<div class="countCell"><div class="countVal">${v}</div><div class="countLab">${["Días","Horas","Minutos","Segundos"][i]}</div></div>`).join(""); };
   renderCountdown(); setInterval(renderCountdown, 1000);
 
-  document.querySelector("#envWrap").addEventListener("click", () => { document.querySelector("#gate").classList.add("open"); setTimeout(() => { document.querySelector("#gate").hidden = true; document.querySelector("#appContent").hidden = false; }, 500); });
+  document.querySelector("#envWrap").addEventListener("click", () => {
+    const gate = document.querySelector("#gate");
+    const appContent = document.querySelector("#appContent");
+    gate.classList.add("open");
+    setTimeout(() => {
+      document.body.classList.add("gate-done");
+      document.body.classList.remove("gate-open");
+      gate.hidden = true;
+      appContent.hidden = false;
+    }, 500);
+  });
   let answer = "Sí";
   document.querySelectorAll("[data-answer]").forEach((button) => button.addEventListener("click", () => { answer = button.dataset.answer; document.querySelectorAll("[data-answer]").forEach((item) => item.classList.toggle("active", item === button)); }));
   document.querySelector("#rsvpForm")?.addEventListener("submit", (event) => { event.preventDefault(); const message = document.querySelector("#rsvpMsg"); if (!config.rsvp.demoMode || config.rsvp.endpoint || config.rsvp.whatsappUrl) { message.textContent = "Envío bloqueado: esta plantilla solo admite el modo demostración."; return; } message.textContent = `${config.rsvp.successMessage} Respuesta: ${answer}.`; });
